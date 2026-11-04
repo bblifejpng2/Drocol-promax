@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { HeroPhoto } from "./page-hero";
+import { SunAlignedPhoto } from "./sun-aligned-photo";
 import { heroBadge, heroDescription } from "./data";
 
 export function Hero() {
   return (
     <section className="on-photo relative bg-[#1c1917] px-3 pt-[190px] pb-16 lg:px-10 lg:pt-[340px] lg:pb-24">
-      <HeroPhoto src="/sites/calif/heroes/home.jpg" />
+      <SunAlignedPhoto src="/sites/drocol/heroes/home.jpg" width={1920} height={1440} sunX={1413} sunY={708} />
       {/* Gradient fade at bottom */}
       <div className="hero-fade absolute bottom-0 left-0 h-48 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
       <div className="relative z-10">
@@ -23,7 +23,7 @@ export function Hero() {
 
           <h2 className="mb-4 pl-3 text-3xl font-medium leading-[1.08] tracking-[-0.025em] text-white lg:mb-6 lg:text-[68px]">
             Helping organizations build{" "}
-            <span className="text-sunshine">confidence</span>{" "}
+            <span data-sun-target className="text-sunshine">confidence</span>{" "}
             in their security.
           </h2>
 

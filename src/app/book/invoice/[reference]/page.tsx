@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/sites/calif/header";
-import { Footer } from "@/components/sites/calif/footer";
-import { Invoice } from "@/components/sites/calif/book/invoice";
+import { Header } from "@/components/sites/drocol/header";
+import { Footer } from "@/components/sites/drocol/footer";
+import { Invoice } from "@/components/sites/drocol/book/invoice";
 import { getConfig, invoiceSigOk, isTestMode, paystack, type BookingRecord } from "@/lib/booking/server";
 
 export const metadata: Metadata = {

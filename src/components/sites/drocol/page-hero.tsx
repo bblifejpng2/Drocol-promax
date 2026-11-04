@@ -4,7 +4,7 @@ type PageHeroProps = {
   label: string;
   heading: string;
   description: string;
-  /** Page-specific background photo, e.g. "/sites/calif/heroes/solutions.jpg". */
+  /** Page-specific background photo, e.g. "/sites/drocol/heroes/solutions.jpg". */
   image?: string;
 };
 
@@ -12,7 +12,7 @@ type PageHeroProps = {
  * Full-bleed hero photo with a dark tint. Loaded eagerly at high priority
  * because it is the first thing on the page. While it loads, the section's
  * plain dark background shows — never another page's photo.
- * `unoptimized`: the files in /public/sites/calif/heroes are already
+ * `unoptimized`: the files in /public/sites/drocol/heroes are already
  * web-sized JPEGs, and the on-the-fly resizer was stalling under load.
  */
 export function HeroPhoto({ src }: { src: string }) {

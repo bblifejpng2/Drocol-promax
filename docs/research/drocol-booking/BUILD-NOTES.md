@@ -59,4 +59,4 @@ address, and redeploy. The test-mode notices disappear automatically.
 
 Essentials ₦1,100,000 · Assured ₦2,400,000 · Advanced ₦3,600,000 ·
 Sentinel ₦6,500,000. VAT is 7.5%. Source of truth:
-`src/components/sites/calif/book/book-data.ts`.
+`src/components/sites/drocol/book/book-data.ts`.

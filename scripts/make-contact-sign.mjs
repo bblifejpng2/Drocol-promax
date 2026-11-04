@@ -1,6 +1,6 @@
 // Composite a brushed-brass Drocol sign onto the contact lobby photo.
 // Regenerate (from the project root):
-//   node scripts/make-contact-sign.mjs docs/design-references/contact-original.jpg public/sites/calif/heroes/contact.jpg
+//   node scripts/make-contact-sign.mjs docs/design-references/contact-original.jpg public/sites/drocol/heroes/contact.jpg
 import sharp from "sharp";
 
 const [input, output] = process.argv.slice(2);

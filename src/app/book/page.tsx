@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/sites/calif/header";
-import { Footer } from "@/components/sites/calif/footer";
+import { Header } from "@/components/sites/drocol/header";
+import { Footer } from "@/components/sites/drocol/footer";
 import {
   BookCompare,
   BookCustomScope,
@@ -8,7 +8,7 @@ import {
   BookHero,
   BookHow,
   BookPricing,
-} from "@/components/sites/calif/book/book-sections";
+} from "@/components/sites/drocol/book/book-sections";
 
 export const metadata: Metadata = {
   title: "Book a test | Drocol",

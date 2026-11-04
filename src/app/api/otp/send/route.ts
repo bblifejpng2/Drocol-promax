@@ -1,4 +1,4 @@
-import { emailOk } from "@/components/sites/calif/book/book-data";
+import { emailOk } from "@/components/sites/drocol/book/book-data";
 import {
   OTP_TTL_MS,
   canSend,

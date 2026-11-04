@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/sites/calif/header";
-import { Footer } from "@/components/sites/calif/footer";
-import { CTA } from "@/components/sites/calif/cta";
-import { HeroPhoto } from "@/components/sites/calif/page-hero";
+import { Header } from "@/components/sites/drocol/header";
+import { Footer } from "@/components/sites/drocol/footer";
+import { CTA } from "@/components/sites/drocol/cta";
+import { HeroPhoto } from "@/components/sites/drocol/page-hero";
 import {
   articles,
   getArticle,
   type ArticleBlock,
-} from "@/components/sites/calif/research-articles";
+} from "@/components/sites/drocol/research-articles";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -103,7 +103,7 @@ export default async function ArticlePage({ params }: Props) {
       <Header />
       <main>
         <section className="on-photo relative flex min-h-[420px] flex-col justify-end bg-[#1c1917] px-3 pt-[140px] pb-14 lg:min-h-[520px] lg:px-10 lg:pb-20">
-          <HeroPhoto src="/sites/calif/heroes/article.jpg" />
+          <HeroPhoto src="/sites/drocol/heroes/article.jpg" />
           <div className="hero-fade absolute bottom-0 left-0 h-32 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
           <div className="relative z-10 mx-auto w-full max-w-3xl">
             <Link href="/research" className="mb-6 inline-block text-white/70 hover:text-white">← All research</Link>

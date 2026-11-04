@@ -12,7 +12,7 @@ import {
   totalOf,
   vatOf,
   type LevelId,
-} from "@/components/sites/calif/book/book-data";
+} from "@/components/sites/drocol/book/book-data";
 
 // ---------- configuration ----------
 export type BookingConfig = {

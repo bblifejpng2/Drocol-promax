@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/sites/calif/header";
-import { PageHero } from "@/components/sites/calif/page-hero";
-import { Research } from "@/components/sites/calif/research";
-import { CTA } from "@/components/sites/calif/cta";
-import { Footer } from "@/components/sites/calif/footer";
+import { Header } from "@/components/sites/drocol/header";
+import { PageHero } from "@/components/sites/drocol/page-hero";
+import { Research } from "@/components/sites/drocol/research";
+import { CTA } from "@/components/sites/drocol/cta";
+import { Footer } from "@/components/sites/drocol/footer";
 
 export const metadata: Metadata = {
   title: "Research | Drocol",
@@ -18,7 +18,7 @@ export default function ResearchPage() {
       <main>
         <PageHero
           label="Research"
-          image="/sites/calif/heroes/research.jpg"
+          image="/sites/drocol/heroes/research.jpg"
           heading="Research & Insights"
           description="A long-term research program focused on emerging threats, industry trends, technical analysis, and practical guidance for organizations operating across Africa."
         />

@@ -39,4 +39,4 @@ credit not required but appreciated). Downloaded 2026-11-04.
 wall. The unedited photo is `docs/design-references/contact-original.jpg`.
 To regenerate (for example after a logo change), from the project root:
 
-    node scripts/make-contact-sign.mjs docs/design-references/contact-original.jpg public/sites/calif/heroes/contact.jpg
+    node scripts/make-contact-sign.mjs docs/design-references/contact-original.jpg public/sites/drocol/heroes/contact.jpg

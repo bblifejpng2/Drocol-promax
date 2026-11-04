@@ -26,7 +26,7 @@ function Tick({ className = "h-4 w-4" }: { className?: string }) {
 export function BookHero() {
   return (
     <section className="on-photo relative bg-[#1c1917] px-3 pt-[140px] pb-16 lg:px-10 lg:pt-[200px] lg:pb-24">
-      <HeroPhoto src="/sites/calif/heroes/book.jpg" />
+      <HeroPhoto src="/sites/drocol/heroes/book.jpg" />
       <div className="hero-fade absolute bottom-0 left-0 h-32 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
       <div className="relative z-10 mx-auto max-w-screen-xl">
         <p className="mb-4 pl-3 text-xs uppercase tracking-[0.2em] text-accent">

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/sites/calif/header";
-import { PageHero } from "@/components/sites/calif/page-hero";
-import { Company } from "@/components/sites/calif/company";
-import { Testimonials } from "@/components/sites/calif/testimonials";
-import { CTA } from "@/components/sites/calif/cta";
-import { Footer } from "@/components/sites/calif/footer";
+import { Header } from "@/components/sites/drocol/header";
+import { PageHero } from "@/components/sites/drocol/page-hero";
+import { Company } from "@/components/sites/drocol/company";
+import { Testimonials } from "@/components/sites/drocol/testimonials";
+import { CTA } from "@/components/sites/drocol/cta";
+import { Footer } from "@/components/sites/drocol/footer";
 
 export const metadata: Metadata = {
   title: "Company | Drocol",
@@ -19,7 +19,7 @@ export default function CompanyPage() {
       <main>
         <PageHero
           label="Company"
-          image="/sites/calif/heroes/company.jpg"
+          image="/sites/drocol/heroes/company.jpg"
           heading="Built in Lagos. Building for the continent."
           description="Drocol Technologies is a Nigerian cybersecurity company combining expert consulting, original research, and AI-powered technology — so African organizations can secure what matters and move forward with confidence."
         />

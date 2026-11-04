@@ -1,13 +1,13 @@
-import { Header } from "@/components/sites/calif/header";
-import { Hero } from "@/components/sites/calif/hero";
-import { LogoCarousel } from "@/components/sites/calif/logo-carousel";
-import { Services } from "@/components/sites/calif/services";
-import { Testimonials } from "@/components/sites/calif/testimonials";
-import { Press } from "@/components/sites/calif/press";
-import { WhyDrocol } from "@/components/sites/calif/why-drocol";
-import { CTA } from "@/components/sites/calif/cta";
-import { Footer } from "@/components/sites/calif/footer";
-import { SHOW_TESTIMONIALS } from "@/components/sites/calif/data";
+import { Header } from "@/components/sites/drocol/header";
+import { Hero } from "@/components/sites/drocol/hero";
+import { LogoCarousel } from "@/components/sites/drocol/logo-carousel";
+import { Services } from "@/components/sites/drocol/services";
+import { Testimonials } from "@/components/sites/drocol/testimonials";
+import { Press } from "@/components/sites/drocol/press";
+import { WhyDrocol } from "@/components/sites/drocol/why-drocol";
+import { CTA } from "@/components/sites/drocol/cta";
+import { Footer } from "@/components/sites/drocol/footer";
+import { SHOW_TESTIMONIALS } from "@/components/sites/drocol/data";
 
 export default function Home() {
   return (

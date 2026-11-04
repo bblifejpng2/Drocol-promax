@@ -1,4 +1,4 @@
-import { emailOk, naira } from "@/components/sites/calif/book/book-data";
+import { emailOk, naira } from "@/components/sites/drocol/book/book-data";
 import {
   canSend,
   escapeHtml,

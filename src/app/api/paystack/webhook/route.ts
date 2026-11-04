@@ -1,4 +1,4 @@
-import { naira } from "@/components/sites/calif/book/book-data";
+import { naira } from "@/components/sites/drocol/book/book-data";
 import {
   escapeHtml,
   getConfig,

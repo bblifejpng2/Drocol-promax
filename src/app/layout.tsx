@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { themeInitScript } from "@/components/sites/calif/theme-toggle";
+import { themeInitScript } from "@/components/sites/drocol/theme-toggle";
 
 const outfit = Outfit({
   variable: "--font-outfit",

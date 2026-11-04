@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Header } from "@/components/sites/calif/header";
-import { Footer } from "@/components/sites/calif/footer";
-import { Checkout } from "@/components/sites/calif/book/checkout";
-import { isLevelId } from "@/components/sites/calif/book/book-data";
+import { Header } from "@/components/sites/drocol/header";
+import { Footer } from "@/components/sites/drocol/footer";
+import { Checkout } from "@/components/sites/drocol/book/checkout";
+import { isLevelId } from "@/components/sites/drocol/book/book-data";
 import { getConfig, isTestMode } from "@/lib/booking/server";
 
 export const metadata: Metadata = {

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/sites/calif/header";
-import { PageHero } from "@/components/sites/calif/page-hero";
-import { Contact } from "@/components/sites/calif/contact";
-import { isLevelId } from "@/components/sites/calif/book/book-data";
-import { Footer } from "@/components/sites/calif/footer";
+import { Header } from "@/components/sites/drocol/header";
+import { PageHero } from "@/components/sites/drocol/page-hero";
+import { Contact } from "@/components/sites/drocol/contact";
+import { isLevelId } from "@/components/sites/drocol/book/book-data";
+import { Footer } from "@/components/sites/drocol/footer";
 
 export const metadata: Metadata = {
   title: "Contact | Drocol",
@@ -23,7 +23,7 @@ export default async function ContactPage({
       <main>
         <PageHero
           label="Contact"
-          image="/sites/calif/heroes/contact.jpg"
+          image="/sites/drocol/heroes/contact.jpg"
           heading="Let's talk."
           description="Tell us what you're building, and what keeps you up at night. Available 24/7."
         />

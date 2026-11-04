@@ -1,5 +1,5 @@
 // Research articles, extracted from drocol.com's published content
-// (docs/research/calif/drocol_main.js.txt). Rendered at /research/[slug].
+// (docs/research/drocol/drocol_main.js.txt). Rendered at /research/[slug].
 
 export type ArticleBlock =
   | { type: "h2" | "h3" | "p"; text: string }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { researchIntro, researchItems } from "./data";
 import { articles } from "./research-articles";
 
-// Editorial list in calif's research style: date, topic and title per row,
+// Editorial research list: date, topic and title per row,
 // followed by the areas the research program publishes in.
 export function Research() {
   return (

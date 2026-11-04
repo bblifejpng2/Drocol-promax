@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/sites/calif/header";
-import { PageHero } from "@/components/sites/calif/page-hero";
-import { Solutions } from "@/components/sites/calif/solutions";
-import { CTA } from "@/components/sites/calif/cta";
-import { Footer } from "@/components/sites/calif/footer";
+import { Header } from "@/components/sites/drocol/header";
+import { PageHero } from "@/components/sites/drocol/page-hero";
+import { Solutions } from "@/components/sites/drocol/solutions";
+import { CTA } from "@/components/sites/drocol/cta";
+import { Footer } from "@/components/sites/drocol/footer";
 
 export const metadata: Metadata = {
   title: "Solutions | Drocol",
@@ -18,7 +18,7 @@ export default function SolutionsPage() {
       <main>
         <PageHero
           label="Solutions"
-          image="/sites/calif/heroes/solutions.jpg"
+          image="/sites/drocol/heroes/solutions.jpg"
           heading="Security services that meet you where you are."
           description="Assessments, advisory, training, and the technology that amplifies them — built around how your organization actually operates."
         />
