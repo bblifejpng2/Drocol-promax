@@ -231,3 +231,40 @@ html.theme-ready header,
 html.theme-ready section {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
+
+/* "Sunshine" text: warm gold gradient with a bright core that drifts across
+   the word like light off the setting sun, plus a soft glow halo. */
+.text-sunshine {
+  background-image: linear-gradient(
+    100deg,
+    #e87722 0%,
+    #f5a623 30%,
+    #ffe6a1 46%,
+    #fff6dc 50%,
+    #ffe6a1 54%,
+    #f5a623 70%,
+    #e87722 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 3px rgba(255, 214, 120, 0.55)) drop-shadow(0 0 18px rgba(245, 150, 35, 0.55));
+  animation: sunshine 7s ease-in-out infinite;
+}
+@keyframes sunshine {
+  0%,
+  100% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .text-sunshine {
+    animation: none;
+    background-position: 50% 0;
+  }
+}

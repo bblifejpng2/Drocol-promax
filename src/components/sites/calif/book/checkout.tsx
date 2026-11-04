@@ -301,7 +301,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
     <div className="mx-auto max-w-screen-xl px-3 lg:px-6">
       <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <Link href="/book#pricing" className="text-white/60 hover:text-white">← Back to pricing</Link>
-        <ol aria-label="Booking progress" className="flex flex-wrap gap-x-2 gap-y-2 text-sm">
+        <ol aria-label="Booking progress" className="flex items-center gap-1 text-sm sm:gap-2">
           {STEPS.map((s, i) => {
             const n = i + 1;
             const done = n < step;
@@ -311,12 +311,27 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
                 <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold ${cur ? "bg-accent text-white" : done ? "border border-accent text-accent" : "bg-white/10 text-white/70"}`}>
                   {done ? "✓" : n}
                 </span>
-                {s}
+                <span className={cur ? "" : "sr-only sm:not-sr-only"}>{s}</span>
               </li>
             );
           })}
         </ol>
       </div>
+
+      {/* Phones: keep the level and total in view; full summary is below the form */}
+      <a
+        href="#booking-summary"
+        className="mb-4 flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-secondary px-4 py-3 lg:hidden"
+      >
+        <span className="min-w-0">
+          <span className="block text-xs uppercase tracking-[0.15em] text-accent">Your booking</span>
+          <span className="font-semibold text-white">{t.name}</span>
+        </span>
+        <span className="text-right">
+          <span className="block text-lg font-semibold tabular-nums text-white">{naira(totalOf(t.price))}</span>
+          <span className="text-xs text-white/50">incl. VAT · details ↓</span>
+        </span>
+      </a>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div ref={panelRef} className="rounded-lg border border-white/10 bg-secondary p-6 lg:p-10">
@@ -330,7 +345,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
 
               <fieldset className="border-b border-white/10 pb-8">
                 <legend className="mb-3 font-semibold text-white">Level</legend>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
                   {LEVEL_ORDER.map((id) => (
                     <label key={id} className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3.5 font-semibold ${level === id ? "border-accent bg-accent/10 text-white" : "border-white/15 text-white hover:border-white/30"}`}>
                       <input type="radio" name="level" value={id} checked={level === id} onChange={() => changeLevel(id)} className="h-4 w-4 accent-[#d97706]" />
@@ -607,7 +622,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
           )}
         </div>
 
-        <aside aria-label="Your booking" className="self-start rounded-lg border border-white/10 bg-secondary p-6 lg:sticky lg:top-28">
+        <aside id="booking-summary" aria-label="Your booking" className="scroll-mt-24 self-start rounded-lg border border-white/10 bg-secondary p-6 lg:sticky lg:top-28">
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-accent">Your booking</p>
           <h3 className="text-2xl font-semibold text-white">{t.name}</h3>
           <p className="mb-5 text-sm text-white/50">{t.facts.map((f) => f[1]).join(" · ")}</p>

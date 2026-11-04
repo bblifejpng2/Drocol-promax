@@ -23,15 +23,7 @@ export function Hero() {
 
           <h2 className="mb-4 pl-3 text-3xl font-medium leading-[1.08] tracking-[-0.025em] text-white lg:mb-6 lg:text-[68px]">
             Helping organizations build{" "}
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, #E87722 0%, #F5A623 60%, #E87722 100%)",
-              }}
-            >
-              confidence
-            </span>{" "}
+            <span className="text-sunshine">confidence</span>{" "}
             in their security.
           </h2>
 

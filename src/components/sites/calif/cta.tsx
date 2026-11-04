@@ -26,14 +26,7 @@ export function CTA() {
               <span key={i}>{part}</span>
             ) : (
               <span key={i}>
-                <span
-                  className="bg-clip-text text-transparent italic font-light"
-                  style={{
-                    backgroundImage: "linear-gradient(90deg, #E87722, #F5A623)",
-                  }}
-                >
-                  confidence
-                </span>
+                <span className="text-sunshine font-light italic">confidence</span>
                 {part}
               </span>
             )

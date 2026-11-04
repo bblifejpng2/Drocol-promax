@@ -65,12 +65,12 @@ export function Header() {
             }`}
             id="menu"
           >
-            <ul className="mt-4 flex flex-col text-xl font-medium lg:mt-0 lg:flex-row lg:space-x-8">
+            <ul className="mt-4 flex flex-col text-xl font-medium lg:mt-0 lg:flex-row lg:space-x-1 lg:text-base xl:space-x-8 xl:text-xl">
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="block py-2 pl-3 pr-4 text-white hover:text-accent transition-colors"
+                    className="block py-2 pl-3 pr-4 text-white transition-colors hover:text-accent lg:px-2 xl:pl-3 xl:pr-4"
                   >
                     {link.label}
                   </Link>
