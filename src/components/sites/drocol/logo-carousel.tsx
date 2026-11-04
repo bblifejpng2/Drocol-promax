@@ -1,8 +1,9 @@
 import { partners } from "./data";
+import { PartnerMark } from "./partner-logos";
 
-// "In good company" strip: partner names as plain wordmarks. We don't draw
-// logos for real companies; add their official logo files here once they
-// supply them. Two identical slides side by side keep the loop seamless.
+// "In good company" strip: black-and-white partner marks with their names.
+// Swap in each partner's official logo files once they supply them.
+// Two identical slides side by side keep the scrolling loop seamless.
 const REPEAT = 5;
 
 function NameSlide({ hidden = false }: { hidden?: boolean }) {
@@ -15,9 +16,14 @@ function NameSlide({ hidden = false }: { hidden?: boolean }) {
       {items.map((partner, i) => (
         <li
           key={`${partner.id}-${i}`}
-          className="flex shrink-0 items-center gap-16 whitespace-nowrap text-2xl font-semibold tracking-tight text-white/70 lg:text-3xl"
+          className="flex shrink-0 items-center gap-16 whitespace-nowrap"
         >
-          {partner.name}
+          <span className="flex items-center gap-3">
+            <PartnerMark id={partner.id} className="h-10 w-10 shrink-0 lg:h-11 lg:w-11" />
+            <span className="text-2xl font-semibold tracking-tight text-white/80 lg:text-3xl">
+              {partner.name}
+            </span>
+          </span>
           <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-accent/50" />
         </li>
       ))}
