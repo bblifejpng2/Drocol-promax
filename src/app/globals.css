@@ -371,3 +371,17 @@ html.phone-desktop .phone-main-offset {
 html.phone-desktop .phone-hero-offset.book-hero {
   padding-top: 400px;
 }
+/* Compare table Book buttons on phones: the larger text wraps to two
+   lines, so let the pill grow and fill the cell instead of overflowing. */
+html.phone-desktop .compare-book {
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 4.6rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 0.9rem;
+  text-align: center;
+  line-height: 1.15;
+  border-radius: 1.25rem;
+}

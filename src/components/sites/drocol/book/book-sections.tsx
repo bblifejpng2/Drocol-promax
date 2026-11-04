@@ -209,7 +209,7 @@ export function BookCompare() {
                   <td key={id} className={`p-4 ${colClass(i)}`}>
                     <Link
                       href={checkoutHref(id)}
-                      className={`inline-flex h-9 items-center rounded-full px-4 text-sm font-medium ${
+                      className={`compare-book inline-flex h-9 items-center rounded-full px-4 text-sm font-medium ${
                         i === rec ? "bg-gradient-to-r from-accent to-accent-dark text-white" : "border border-white/20 text-white hover:border-accent"
                       }`}
                     >
