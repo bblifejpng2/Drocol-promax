@@ -15,16 +15,13 @@ import {
   isBusinessDay,
   isoFromDate,
   naira,
-  newBookingRef,
   rootDomainOf,
-  subBusinessDays,
   totalOf,
   vatOf,
   type LegalDocId,
   type LevelId,
 } from "./book-data";
 import { Field, LegalModal, Toast, btnLine, btnPrimary, inputClass, linkBtn } from "./book-ui";
-import { Invoice, type InvoiceData } from "./invoice";
 
 const STEPS = ["Scope and date", "Your details", "Review"];
 
@@ -66,8 +63,20 @@ const emptyForm: Form = {
   agreeTerms: false,
 };
 
-type Otp = { code: string | null; sentTo: string | null; verified: string | null; expires: number; tries: number; coolUntil: number };
-const emptyOtp: Otp = { code: null, sentTo: null, verified: null, expires: 0, tries: 0, coolUntil: 0 };
+// Email verification runs on the server (/api/otp/*). `ticket` proves a code
+// was sent; `token` proves the email was verified and is sent with the booking.
+type Otp = { ticket: string | null; sentTo: string | null; verifiedEmail: string | null; token: string | null; coolUntil: number };
+const emptyOtp: Otp = { ticket: null, sentTo: null, verifiedEmail: null, token: null, coolUntil: 0 };
+
+async function postJson<T>(url: string, body: unknown): Promise<{ ok: boolean; data: T & { error?: string } }> {
+  try {
+    const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    const data = (await res.json().catch(() => ({}))) as T & { error?: string };
+    return { ok: res.ok, data };
+  } catch {
+    return { ok: false, data: { error: "Network error. Check your connection and try again." } as T & { error?: string } };
+  }
+}
 
 const subscribeNoop = () => () => {};
 const useMounted = () => useSyncExternalStore(subscribeNoop, () => true, () => false);
@@ -81,7 +90,7 @@ function roleOptions(level: LevelId) {
 export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
   const mounted = useMounted();
   const [level, setLevel] = useState<LevelId>(initialLevel);
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [form, setForm] = useState<Form>(emptyForm);
   const [date, setDate] = useState<string | null>(null);
   const [showLater, setShowLater] = useState(false);
@@ -94,8 +103,9 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
   const [doc, setDoc] = useState<LegalDocId | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
-  const [ref, setRef] = useState<string | null>(null);
-  const [invoice, setInvoice] = useState<InvoiceData | null>(null);
+  const [genError, setGenError] = useState("");
+  const [sending, setSending] = useState(false);
+  const [checking, setChecking] = useState(false);
   const toastTimer = useRef<number | undefined>(undefined);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -151,7 +161,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
     if (bad.has(key)) setBad((b) => { const n = new Set(b); n.delete(key); return n; });
   };
 
-  const goToStep = (n: 1 | 2 | 3 | 4) => {
+  const goToStep = (n: 1 | 2 | 3) => {
     setStep(n);
     setMissing("");
     const top = (panelRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 110;
@@ -160,7 +170,6 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
 
   const changeLevel = (id: LevelId) => {
     setLevel(id);
-    setRef(null);
     const opts = roleOptions(id);
     if (!opts.includes(form.roles)) update("roles", opts[Math.min(opts.length, 2) - 1]);
     window.history.replaceState(null, "", `/book/checkout?level=${id}`);
@@ -192,49 +201,49 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
     if (!date) { b.add("date"); m.push("a start date"); }
     setBad(b);
     if (m.length) { setMissing("Please add " + m.join(", ") + "."); return; }
-    setRef(null);
     goToStep(2);
   };
 
-  // ---------- email verification (simulated) ----------
+  // ---------- email verification (server) ----------
   const resetOtp = (msg = "") => {
     setOtp((o) => ({ ...emptyOtp, coolUntil: o.coolUntil }));
     setOtpInput("");
     setOtpMsg(msg);
   };
 
-  const sendCode = () => {
+  const sendCode = async () => {
     const em = form.email.trim();
     if (!emailOk(em)) {
       setBad((b) => new Set(b).add("email"));
       setOtpMsg("Enter a valid work email first.");
       return;
     }
-    const code = String(Math.floor(100000 + Math.random() * 900000));
+    setSending(true);
+    const { ok, data } = await postJson<{ ticket: string }>("/api/otp/send", { email: em });
+    setSending(false);
+    if (!ok) { setOtpMsg(data.error ?? "We couldn't send the code. Try again."); return; }
     const nowMs = Date.now();
-    setOtp({ code, sentTo: em, verified: null, expires: nowMs + 10 * 60 * 1000, tries: 0, coolUntil: nowMs + 30 * 1000 });
+    setOtp({ ticket: data.ticket, sentTo: em, verifiedEmail: null, token: null, coolUntil: nowMs + 30 * 1000 });
     setNow(nowMs);
     setOtpInput("");
-    setOtpMsg(`We sent a 6-digit code to ${em}. It expires in 10 minutes. (Prototype: the code is ${code}.)`);
+    setOtpMsg(`We sent a 6-digit code to ${em}. It expires in 10 minutes. Check your spam folder if it doesn't arrive.`);
   };
 
-  const verifyCode = (value = otpInput) => {
+  const verifyCode = async (value = otpInput) => {
     const c = value.trim();
-    if (!otp.code) { setOtpMsg("Send a code first."); return; }
-    if (Date.now() > otp.expires) { setOtpMsg("That code has expired. Send a new one."); return; }
-    if (otp.tries >= 5) { setOtpMsg("Too many attempts. Send a new code."); return; }
-    if (c !== otp.code) {
-      setOtp((o) => ({ ...o, tries: o.tries + 1 }));
-      setOtpMsg("That code doesn't match. Check it and try again.");
-      return;
-    }
-    setOtp((o) => ({ ...o, verified: o.sentTo }));
+    if (!otp.ticket) { setOtpMsg("Send a code first."); return; }
+    if (!/^\d{6}$/.test(c)) { setOtpMsg("Enter the 6-digit code from the email."); return; }
+    setChecking(true);
+    const { ok, data } = await postJson<{ verified: string }>("/api/otp/verify", { ticket: otp.ticket, code: c, email: form.email.trim() });
+    setChecking(false);
+    if (!ok) { setOtpMsg(data.error ?? "That code doesn't match. Check it and try again."); return; }
+    setOtp((o) => ({ ...o, verifiedEmail: form.email.trim().toLowerCase(), token: data.verified }));
     setOtpMsg("");
     setMissing("");
     setBad((b) => { const n = new Set(b); n.delete("email"); return n; });
   };
 
-  const verified = !!otp.verified && otp.verified === form.email.trim();
+  const verified = !!otp.token && otp.verifiedEmail === form.email.trim().toLowerCase();
 
   // ---------- step 2 ----------
   const submitStep2 = (e: React.FormEvent) => {
@@ -255,61 +264,31 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
     if (!form.agreeTerms) m.push("your agreement to the terms");
     setBad(b);
     if (m.length) { setMissing("Please add " + m.join(", ") + "."); return; }
-    if (!ref) setRef(newBookingRef());
     goToStep(3);
   };
 
-  // ---------- step 3 ----------
-  const generateInvoice = () => {
-    if (!date) return;
+  // ---------- step 3: create the invoice on the server ----------
+  const generateInvoice = async () => {
+    if (!date || !otp.token) return;
     setGenerating(true);
-    window.setTimeout(() => {
-      const bookingRef = ref ?? newBookingRef();
-      const start = dateFromIso(date);
-      const todayNoon = new Date();
-      todayNoon.setHours(12, 0, 0, 0);
-      let payBy = subBusinessDays(start, 2);
-      if (payBy < todayNoon) payBy = todayNoon;
-      setInvoice({
-        no: bookingRef.replace("DRC-", "INV-"),
-        ref: bookingRef,
-        level,
-        issued: new Date(),
-        payBy,
-        company: form.company.trim(),
-        phone: form.phone.trim(),
-        name: form.fullName.trim(),
-        position: form.position.trim(),
-        email: form.email.trim(),
-        domain: domainRoot,
-        apps: appList.join(", "),
-        roles: form.roles,
-        start,
-        status: "unpaid",
-      });
+    setGenError("");
+    const { ok, data } = await postJson<{ url: string }>("/api/bookings", {
+      ...form,
+      level,
+      start: date,
+      verified: otp.token,
+    });
+    if (!ok) {
       setGenerating(false);
-      setStep(4);
-      window.scrollTo({ top: 0 });
-    }, 700);
+      setGenError(data.error ?? "We couldn't create your invoice. Please try again.");
+      return;
+    }
+    window.location.assign(data.url);
   };
 
   const signerText = form.signer === "other" ? `${form.sName} (${form.sEmail})` : `${form.fullName} (you)`;
 
   // ---------- render ----------
-  if (step === 4 && invoice) {
-    return (
-      <>
-        <Invoice
-          invoice={invoice}
-          onPaid={(paid) => setInvoice(paid)}
-          onBack={() => setStep(3)}
-          toast={showToast}
-        />
-        <Toast message={toast} />
-      </>
-    );
-  }
-
   const summaryRows: [string, string][] = [
     ["Company", form.company.trim() || "–"],
     ["Domain", domainRoot || "–"],
@@ -322,14 +301,14 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
     <div className="mx-auto max-w-screen-xl px-3 lg:px-6">
       <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <Link href="/book#pricing" className="text-white/60 hover:text-white">← Back to pricing</Link>
-        <ol aria-label="Booking progress" className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <ol aria-label="Booking progress" className="flex flex-wrap gap-x-2 gap-y-2 text-sm">
           {STEPS.map((s, i) => {
             const n = i + 1;
             const done = n < step;
             const cur = n === step;
             return (
-              <li key={s} aria-current={cur ? "step" : undefined} className={`flex items-center gap-2 ${cur ? "text-white" : done ? "text-white/70" : "text-white/40"}`}>
-                <span className={`flex h-7 w-7 items-center justify-center rounded-full border text-xs ${cur ? "border-accent bg-accent text-white" : done ? "border-accent text-accent" : "border-white/20"}`}>
+              <li key={s} aria-current={cur ? "step" : undefined} className={`flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-4 font-medium ${cur ? "border border-white/15 bg-white/5 text-white" : done ? "text-white/70" : "text-white/50"}`}>
+                <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold ${cur ? "bg-accent text-white" : done ? "border border-accent text-accent" : "bg-white/10 text-white/70"}`}>
                   {done ? "✓" : n}
                 </span>
                 {s}
@@ -349,16 +328,15 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
                 <p className="text-white/60">You&apos;ll share test accounts later, through a secure link.</p>
               </div>
 
-              <fieldset>
-                <legend className="mb-3 text-sm font-medium text-white/80">Level</legend>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <fieldset className="border-b border-white/10 pb-8">
+                <legend className="mb-3 font-semibold text-white">Level</legend>
+                <div className="flex flex-wrap gap-2">
                   {LEVEL_ORDER.map((id) => (
-                    <label key={id} className={`flex cursor-pointer items-center justify-between gap-3 rounded-md border px-4 py-3 text-sm ${level === id ? "border-accent bg-accent/10 text-white" : "border-white/15 text-white/70 hover:border-white/30"}`}>
-                      <span className="flex items-center gap-3">
-                        <input type="radio" name="level" value={id} checked={level === id} onChange={() => changeLevel(id)} className="accent-[#d97706]" />
-                        {LEVELS[id].name}
+                    <label key={id} className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3.5 font-semibold ${level === id ? "border-accent bg-accent/10 text-white" : "border-white/15 text-white hover:border-white/30"}`}>
+                      <input type="radio" name="level" value={id} checked={level === id} onChange={() => changeLevel(id)} className="h-4 w-4 accent-[#d97706]" />
+                      <span className="tabular-nums">
+                        {LEVELS[id].name} · {naira(LEVELS[id].price)}
                       </span>
-                      <span className="tabular-nums">{naira(LEVELS[id].price)}</span>
                     </label>
                   ))}
                 </div>
@@ -496,8 +474,8 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
                     </p>
                   ) : (
                     <div className="flex flex-wrap gap-2">
-                      <button type="button" onClick={sendCode} disabled={coolLeft > 0} className={btnLine}>
-                        {coolLeft > 0 ? `Resend in ${coolLeft}s` : otp.sentTo ? "Resend code" : "Send code"}
+                      <button type="button" onClick={sendCode} disabled={coolLeft > 0 || sending} className={btnLine}>
+                        {sending ? "Sending…" : coolLeft > 0 ? `Resend in ${coolLeft}s` : otp.sentTo ? "Resend code" : "Send code"}
                       </button>
                       <input
                         inputMode="numeric"
@@ -505,7 +483,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
                         maxLength={6}
                         placeholder="6-digit code"
                         aria-label="Verification code"
-                        disabled={!otp.code}
+                        disabled={!otp.ticket || checking}
                         className={`${inputClass} w-[170px] border-white/15 font-mono tracking-[0.2em]`}
                         value={otpInput}
                         onChange={(e) => {
@@ -515,7 +493,7 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
                         }}
                         onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); verifyCode(); } }}
                       />
-                      <button type="button" onClick={() => verifyCode()} disabled={!otp.code} className={btnLine}>Verify</button>
+                      <button type="button" onClick={() => verifyCode()} disabled={!otp.ticket || checking} className={btnLine}>{checking ? "Checking…" : "Verify"}</button>
                     </div>
                   )}
                   {otpMsg && <p aria-live="polite" className="text-sm text-white/60">{otpMsg}</p>}
@@ -621,8 +599,9 @@ export function Checkout({ initialLevel }: { initialLevel: LevelId }) {
               <div className="flex flex-wrap items-center gap-3">
                 <button type="button" className={btnLine} onClick={() => goToStep(2)}>Back</button>
                 <button type="button" className={btnPrimary} disabled={generating} onClick={generateInvoice}>
-                  {generating ? "Generating invoice…" : "Generate invoice"}
+                  {generating ? "Creating your invoice…" : "Generate invoice"}
                 </button>
+                {genError && <p role="alert" className="w-full text-sm text-red-400">{genError}</p>}
               </div>
             </div>
           )}

@@ -10,7 +10,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-secondary fixed w-full z-50 transition-colors">
+    <header className="bg-secondary fixed w-full z-50 transition-colors print:hidden">
       <nav className="px-4 py-2.5 lg:px-6">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <Link href="/" aria-label="Drocol home">

@@ -13,9 +13,7 @@ import {
   type CompareValue,
 } from "./book-data";
 
-// Online checkout is paused until payments and email codes have a backend
-// (see docs/research/drocol-booking/BUILD-NOTES.md); requests go to Contact.
-const checkoutHref = (level: string) => `/contact?level=${level}#start`;
+const checkoutHref = (level: string) => `/book/checkout?level=${level}`;
 
 function Tick({ className = "h-4 w-4" }: { className?: string }) {
   return (

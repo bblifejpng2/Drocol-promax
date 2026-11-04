@@ -6,7 +6,7 @@ export function Footer() {
   const [general, support] = contactItems;
 
   return (
-    <footer className="border-y border-accent/30 bg-secondary">
+    <footer className="border-y border-accent/30 bg-secondary print:hidden">
       <div className="grid grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-accent/30">
         {/* Logo / Brand */}
         <div className="col-span-2 flex items-center justify-center border-b border-accent/30 p-6 lg:col-span-1 lg:border-b-0">
