@@ -102,7 +102,7 @@ export default async function ArticlePage({ params }: Props) {
     <>
       <Header />
       <main>
-        <section className="on-photo relative flex min-h-[420px] flex-col justify-end bg-[#1c1917] px-3 pt-[140px] pb-14 lg:min-h-[520px] lg:px-10 lg:pb-20">
+        <section className="phone-hero-offset on-photo relative flex min-h-[420px] flex-col justify-end bg-[#1c1917] px-3 pt-[140px] pb-14 lg:min-h-[520px] lg:px-10 lg:pb-20">
           <HeroPhoto src="/sites/drocol/heroes/article.jpg" />
           <div className="hero-fade absolute bottom-0 left-0 h-32 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
           <div className="relative z-10 mx-auto w-full max-w-3xl">

@@ -25,7 +25,7 @@ export default async function CheckoutPage({
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-primary pb-24 pt-28 lg:pt-32">
+      <main className="phone-main-offset min-h-screen bg-primary pb-24 pt-28 lg:pt-32">
         {isTestMode() ? (
           <div className="mx-auto mb-8 max-w-screen-xl px-3 lg:px-6">
             <p className="rounded-md border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm text-amber-200">

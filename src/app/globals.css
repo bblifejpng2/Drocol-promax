@@ -358,3 +358,12 @@ html.phone-desktop .nav-links a {
 html.phone-desktop .nav-links > li.sm\:hidden {
   display: none;
 }
+
+/* Phone desktop view: the two-row header is ~200px tall, so push hero
+   content and plain pages down to clear it with some breathing room. */
+html.phone-desktop .phone-hero-offset {
+  padding-top: 300px;
+}
+html.phone-desktop .phone-main-offset {
+  padding-top: 250px;
+}

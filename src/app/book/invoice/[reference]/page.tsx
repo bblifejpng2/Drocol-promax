@@ -47,7 +47,7 @@ export default async function InvoicePage({ params, searchParams }: Props) {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-primary pb-24 pt-28 lg:pt-32 print:pt-0">
+      <main className="phone-main-offset min-h-screen bg-primary pb-24 pt-28 lg:pt-32 print:pt-0">
         {booking ? (
           <Invoice
             booking={booking}
