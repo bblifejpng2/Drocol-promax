@@ -4,12 +4,12 @@ import { heroBadge, heroDescription } from "./data";
 
 export function Hero() {
   return (
-    <section className="on-photo relative bg-[#1c1917] px-3 pt-[170px] pb-16 lg:px-10 lg:pt-[280px] lg:pb-24">
+    <section className="on-photo relative bg-[#1c1917] px-3 pt-[180px] pb-16 lg:px-10 lg:pt-[310px] lg:pb-24">
       <HeroPhoto src="/sites/calif/heroes/home.jpg" />
       {/* Gradient fade at bottom */}
       <div className="hero-fade absolute bottom-0 left-0 h-48 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
       <div className="relative z-10">
-        <div className="mx-auto max-w-screen-xl">
+        <div className="mx-auto max-w-screen-xl md:pl-6 lg:pl-10">
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5">
             <span className="relative flex h-2 w-2 shrink-0">
