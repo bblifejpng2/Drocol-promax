@@ -18,8 +18,8 @@ type Layout = { img: CSSProperties; glowX: number; glowY: number };
 /**
  * Hero background that positions the photo so its sun sits just above the
  * element marked `data-sun-target` in the same section (the word
- * "confidence"), at every screen size. The tint opens up around the sun so
- * it glows, while the rest of the photo stays dark enough for white text.
+ * "confidence"), at every screen size. The tint is only slightly lighter
+ * around the sun — a soft warm glow, not a bright hotspot.
  * Before measuring (and without JS) it falls back to a normal cover crop.
  */
 export function SunAlignedPhoto({ src, width, height, sunX, sunY }: Props) {
@@ -53,12 +53,24 @@ export function SunAlignedPhoto({ src, width, height, sunX, sunY }: Props) {
       });
     };
 
-    // ResizeObserver fires once on observe, then on every size change
-    // (window resize, fonts loading, text wrapping differently).
+    // Re-measure whenever the word can move: the section or headline changes
+    // size (text wrapping, larger phone text), the web font finishes
+    // loading, or the window/zoom changes. ResizeObserver also fires once on
+    // observe, which gives the first measurement.
     const ro = new ResizeObserver(update);
     ro.observe(section);
     ro.observe(target);
-    return () => ro.disconnect();
+    if (target.parentElement) ro.observe(target.parentElement);
+    window.addEventListener("resize", update);
+    window.visualViewport?.addEventListener("resize", update);
+    let alive = true;
+    document.fonts?.ready.then(() => alive && update());
+    return () => {
+      alive = false;
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+      window.visualViewport?.removeEventListener("resize", update);
+    };
   }, [width, height, sunX, sunY]);
 
   return (
@@ -78,7 +90,7 @@ export function SunAlignedPhoto({ src, width, height, sunX, sunY }: Props) {
         className="absolute inset-0"
         style={{
           background: layout
-            ? `radial-gradient(circle at ${layout.glowX}px ${layout.glowY}px, rgba(0,0,0,0) 0px, rgba(0,0,0,0.15) 40px, rgba(0,0,0,0.45) 110px, rgba(0,0,0,0.62) 300px)`
+            ? `radial-gradient(circle at ${layout.glowX}px ${layout.glowY}px, rgba(0,0,0,0.38) 0px, rgba(0,0,0,0.46) 70px, rgba(0,0,0,0.56) 170px, rgba(0,0,0,0.62) 320px)`
             : "rgba(0,0,0,0.6)",
         }}
       />
