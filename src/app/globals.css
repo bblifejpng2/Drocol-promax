@@ -7,9 +7,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-heading: var(--font-sans);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,38 +51,39 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #1c1917;
+  --foreground: #ffffff;
+  --card: #292524;
+  --card-foreground: #ffffff;
+  --popover: #292524;
+  --popover-foreground: #ffffff;
+  --primary: #1c1917;
+  --primary-foreground: #ffffff;
+  --secondary: #292524;
+  --secondary-foreground: #ffffff;
+  --muted: #292524;
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: #d97706;
+  --accent-foreground: #ffffff;
+  --accent-dark: #b45309;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #d97706;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #292524;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #1c1917;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #292524;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #d97706;
 }
 
 .dark {
@@ -122,9 +125,121 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-primary text-white;
   }
   html {
     @apply font-sans;
   }
+}
+
+/* Calif.io custom styles */
+
+@keyframes scroll-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes arrow-bounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-scroll-slide {
+  animation: 60s linear infinite scroll-slide;
+}
+
+@media (min-width: 769px) {
+  .animate-scroll-slide {
+    animation: 80s linear infinite scroll-slide;
+  }
+}
+
+.animate-arrow-bounce {
+  animation: 1.2s ease-in-out infinite arrow-bounce;
+}
+
+.bg-home {
+  background-image: url("/sites/calif/hero-bg-desktop.a1a48b0a.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .bg-home {
+    background-image: url("/sites/calif/hero-bg-mobile.787f1cdc.webp");
+  }
+}
+
+:target {
+  scroll-margin-top: 100px;
+}
+/* ===== Light theme =====
+   The site is dark-first: nearly all text, borders and tints use Tailwind's
+   `white` colour (text-white/60, border-white/10, ...). In light mode we
+   point that colour at the ink colour and swap the two page surfaces, so
+   every component flips without per-component changes. */
+html.light {
+  color-scheme: light;
+  --color-white: #1c1917;
+  --background: #faf8f5;
+  --foreground: #1c1917;
+  --primary: #faf8f5;
+  --primary-foreground: #1c1917;
+  --secondary: #f1ede7;
+  --secondary-foreground: #1c1917;
+  --card: #ffffff;
+  --muted: #f1ede7;
+  --muted-foreground: rgba(28, 25, 23, 0.6);
+  --accent: #b45309;
+  --accent-dark: #92400e;
+  --border: rgba(28, 25, 23, 0.1);
+  --input: rgba(28, 25, 23, 0.15);
+}
+html:not(.light) {
+  color-scheme: dark;
+}
+
+/* Text on photos and on orange fills stays white in both themes. */
+html.light .on-photo,
+html.light .keep-white,
+html.light .bg-accent,
+html.light [class*="from-accent"] {
+  --color-white: #ffffff;
+}
+/* Photo heroes fade into the page colour only in dark mode. */
+html.light .hero-fade {
+  display: none;
+}
+/* The testimonial wall is a white section in both themes. */
+.keep-light {
+  --color-white: #ffffff;
+}
+
+/* Status colours need deeper shades on a light background. */
+html.light .text-amber-200,
+html.light .text-amber-300 { color: #92400e; }
+html.light .text-emerald-100,
+html.light .text-emerald-200,
+html.light .text-emerald-300,
+html.light .text-emerald-400 { color: #047857; }
+html.light .text-red-400 { color: #b91c1c; }
+html.light .bg-amber-400\/10,
+html.light .bg-amber-400\/15 { background-color: rgba(217, 119, 6, 0.12); }
+html.light .bg-emerald-400\/10,
+html.light .bg-emerald-400\/15 { background-color: rgba(4, 120, 87, 0.1); }
+
+/* Smooth the switch, but never animate on first paint. */
+html.theme-ready body,
+html.theme-ready header,
+html.theme-ready section {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }

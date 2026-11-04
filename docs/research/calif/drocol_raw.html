@@ -1,0 +1,68 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+   <link rel="icon" type="image/svg+xml" href="/drocol-icon.svg" />
+    <link rel="apple-touch-icon" href="/drocol-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drocol | Confidence in Your Security</title>
+    <meta name="description" content="Drocol Technologies Limited provides enterprise cybersecurity solutions for Nigerian organizations. Real-time threat detection, attack path analysis, and developer-ready APIs." />
+    <meta name="keywords" content="cybersecurity, Nigeria, threat detection, attack path analysis, enterprise security, cloud security, pen testing" />
+    <meta name="author" content="Drocol Technologies Limited" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://drocol.ng/" />
+    <meta property="og:title" content="Drocol Technologies Limited â Enterprise Cybersecurity Made Intelligent" />
+    <meta property="og:description" content="Real-time threat detection, attack path analysis, and developer-ready APIs. Built by Nigerians, for Nigerian enterprises." />
+    <meta property="og:image" content="http://drocol.ng/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="http://drocol.ng/" />
+    <meta property="twitter:title" content="Drocol Technologies Limited â Enterprise Cybersecurity Made Intelligent" />
+    <meta property="twitter:description" content="Real-time threat detection, attack path analysis, and developer-ready APIs. Built by Nigerians, for Nigerian enterprises." />
+    <meta property="twitter:image" content="http://drocol.ng/og-image.png" />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <script type="module" crossorigin src="/assets/main-ZSJDeXLC.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/proxy-DQuvn7gK.js">
+    <link rel="stylesheet" crossorigin href="/assets/proxy-CXsY9R-m.css">
+    <link rel="stylesheet" crossorigin href="/assets/main-BXovZnN0.css">
+  </head>
+  <body>
+    <script>
+      /* Detect iOS "Request Desktop Site" and force a desktop-width viewport.
+         iOS Safari changes the UA to look like macOS but keeps the real
+         device width (~390 px).  CSS media queries then still pick the
+         mobile breakpoint.  We fix this by spotting the discrepancy and
+         rewriting the viewport meta before any layout runs. */
+      (function () {
+        var ua = navigator.userAgent || '';
+        var isTouch = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+        // Desktop UA markers that iOS sends when "Request Desktop Site" is on
+        var looksDesktop = /Macintosh|Mac OS X/.test(ua) && !/iPhone|iPad|iPod/.test(ua);
+        if (isTouch && looksDesktop) {
+          var meta = document.querySelector('meta[name="viewport"]');
+          if (meta) {
+            // Scale so the 1280px desktop layout fits the actual phone screen
+            var targetW = 1280;
+            var screenW = window.innerWidth || 390;
+            var scale = Math.round((screenW / targetW) * 1000) / 1000;
+            meta.setAttribute('content', 'width=' + targetW + ', initial-scale=' + scale);
+          }
+        }
+      })();
+    </script>
+    <div id="root"></div>
+
+  </body>
+</html>

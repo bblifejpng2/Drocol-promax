@@ -1,0 +1,35 @@
+import type { Metadata } from "next";
+import { Header } from "@/components/sites/calif/header";
+import { Footer } from "@/components/sites/calif/footer";
+import { Checkout } from "@/components/sites/calif/book/checkout";
+import { isLevelId } from "@/components/sites/calif/book/book-data";
+
+export const metadata: Metadata = {
+  title: "Book your test | Drocol",
+  description: "Choose your testing level and start date, add your details, and generate your invoice.",
+  robots: { index: false },
+};
+
+export default async function CheckoutPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { level } = await searchParams;
+  const initialLevel = isLevelId(level) ? level : "advanced";
+
+  return (
+    <>
+      <Header />
+      <main className="min-h-screen bg-primary pb-24 pt-28 lg:pt-32">
+        <div className="mx-auto mb-8 max-w-screen-xl px-3 lg:px-6">
+          <p className="rounded-md border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm text-amber-200">
+            <b>Prototype.</b> Email codes and payments are simulated — nothing is sent or charged.
+          </p>
+        </div>
+        <Checkout initialLevel={initialLevel} />
+      </main>
+      <Footer />
+    </>
+  );
+}
