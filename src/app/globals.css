@@ -268,3 +268,33 @@ html.theme-ready section {
     background-position: 50% 0;
   }
 }
+
+/* Phones showing the desktop design (html.phone-desktop, set by the server
+   in app/layout.tsx). The 1024px layout is zoomed out to fit the screen
+   (about 37% on a typical phone), so body text, labels and small print are
+   enlarged to stay readable. Big headings are already large enough. The
+   header keeps normal sizes so the menu stays on one row. */
+html.phone-desktop {
+  --text-xs: 1.1rem;
+  --text-sm: 1.3rem;
+  --text-base: 1.5rem;
+  --text-lg: 1.65rem;
+  --text-xl: 1.8rem;
+  --text-2xl: 2.05rem;
+  --text-3xl: 2.35rem;
+}
+/* Text with no size class inherits from body: enlarge that default too. */
+html.phone-desktop body {
+  font-size: var(--text-base);
+}
+html.phone-desktop header {
+  font-size: 1rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+}
+html.phone-desktop .text-\[11px\] {
+  font-size: 1rem;
+}

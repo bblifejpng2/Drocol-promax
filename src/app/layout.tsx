@@ -4,7 +4,7 @@ import { Outfit } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { themeInitScript } from "@/components/sites/drocol/theme-toggle";
-import { DESKTOP_VIEW_WIDTH, VIEW_COOKIE } from "@/components/sites/drocol/view-mode-config";
+import { DESKTOP_VIEW_WIDTH, VIEW_COOKIE, decideView } from "@/components/sites/drocol/view-mode-config";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -18,27 +18,32 @@ export const metadata: Metadata = {
     "Drocol Technologies Limited provides enterprise cybersecurity solutions for Nigerian organizations. Real-time threat detection, attack path analysis, and developer-ready APIs.",
 };
 
-// Phones get the full desktop layout when the visitor asked for it (cookie)
-// or their browser's "Desktop site" mode is on (desktop user agent). Real
-// desktop browsers ignore the viewport tag, so this never affects them.
-export async function generateViewport(): Promise<Viewport> {
+async function viewForRequest() {
   const choice = (await cookies()).get(VIEW_COOKIE)?.value;
   const ua = (await headers()).get("user-agent") ?? "";
-  const mobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
-  const desktop = choice === "desktop" || (choice !== "mobile" && ua !== "" && !mobileUA);
-  // No initial-scale for desktop: phones then fit the whole 1280px page on screen.
+  return decideView(ua, choice);
+}
+
+// Phones get the desktop design fitted to the screen (no initial-scale, so
+// the browser zooms out to show the full width). Real desktop browsers
+// ignore the viewport tag.
+export async function generateViewport(): Promise<Viewport> {
+  const { desktop } = await viewForRequest();
   return desktop
     ? { width: DESKTOP_VIEW_WIDTH, initialScale: undefined }
     : { width: "device-width", initialScale: 1 };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { desktop, phone } = await viewForRequest();
+  // Larger text when a phone shows the desktop design (see globals.css).
+  const phoneDesktop = desktop && phone ? " phone-desktop" : "";
   return (
-    <html lang="en" className={`${outfit.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${outfit.variable} h-full antialiased${phoneDesktop}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-primary text-primary">
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}

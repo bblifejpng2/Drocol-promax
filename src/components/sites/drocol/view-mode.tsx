@@ -4,16 +4,10 @@ import { useEffect, useSyncExternalStore } from "react";
 import { DESKTOP_VIEW_WIDTH, VIEW_COOKIE } from "./view-mode-config";
 
 /**
- * Desktop view on phones.
- *
- * The server (see generateViewport in app/layout.tsx) sends a 1280px-wide
- * viewport when either:
- *  - the visitor chose "View desktop version" (cookie `drocol-view=desktop`), or
- *  - the browser identifies as a desktop. Real desktop browsers ignore the
- *    viewport tag, but phones using their browser's "Desktop site" option
- *    send a desktop identity and obey it — so they get the full desktop
- *    layout, zoomed to fit the screen.
- * A `drocol-view=mobile` cookie always wins, so visitors can switch back.
+ * Phone layout switch. Phones show the desktop design by default (see
+ * view-mode-config.ts and app/layout.tsx); this footer link lets visitors
+ * switch to the compact phone layout and back. The choice is a cookie the
+ * server reads, so it applies before the page draws.
  */
 
 type View = "desktop" | "mobile" | null;
@@ -32,7 +26,7 @@ function getView(): View {
 export function ViewModeToggle({ className = "" }: { className?: string }) {
   const view = useSyncExternalStore<View>(subscribe, getView, () => null);
 
-  // Desktop view on a phone: make sure the whole 1280px page fits the
+  // Desktop view on a phone: make sure the whole desktop-width page fits the
   // screen (most phones do this already; some open it zoomed in).
   useEffect(() => {
     if (view !== "desktop") return;
@@ -41,6 +35,9 @@ export function ViewModeToggle({ className = "" }: { className?: string }) {
     if (meta && scale > 0 && scale < 1) {
       meta.setAttribute("content", `width=${DESKTOP_VIEW_WIDTH}, initial-scale=${scale}, minimum-scale=${scale}`);
     }
+    // Phones using their browser's "Desktop site" mode aren't recognised by
+    // the server; give them the larger text too.
+    document.documentElement.classList.add("phone-desktop");
   }, [view]);
 
   if (!view) return null;
