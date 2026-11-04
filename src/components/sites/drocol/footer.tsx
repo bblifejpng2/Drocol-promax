@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { contactItems, footerNav, footerServices } from "./data";
 import { DrocolLogo } from "./logo";
+import { ViewModeToggle } from "./view-mode";
 
 export function Footer() {
   const [general, support] = contactItems;
@@ -62,6 +63,7 @@ export function Footer() {
             <Link href="/contact" className="text-sm text-white/70 transition-colors hover:text-accent">
               Contact us
             </Link>
+            <ViewModeToggle className="mt-3 self-start lg:self-center" />
           </div>
         </div>
       </div>
