@@ -1,20 +1,27 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { LEVELS, WHATSAPP, naira, type LevelId } from "./book/book-data";
 
 const fieldClass =
   "w-full rounded-md border border-white/15 bg-primary px-4 py-3 text-white placeholder:text-white/30 outline-none transition-colors focus:border-accent";
 
 const interests = ["Assessment", "Advisory", "Training", "Technology", "Not sure yet"];
 
-// No backend yet: submitting opens the visitor's email app with the enquiry
-// pre-filled. Swap handleSubmit for an API route when one exists.
-export function ContactForm({ email }: { email: string }) {
-  const [error, setError] = useState<string | null>(null);
+type Channel = "email" | "whatsapp";
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+// No backend yet, so the enquiry is handed to the visitor's own app:
+// WhatsApp (works on any phone) or their email client. Replace with an API
+// route that emails info@drocol.com when one exists.
+export function ContactForm({ email, level }: { email: string; level?: LevelId }) {
+  const [error, setError] = useState<string | null>(null);
+  const booking = level ? LEVELS[level] : null;
+  const defaultMessage = booking
+    ? `I'd like to book the ${booking.name} penetration test (${naira(booking.price)} + VAT, ${booking.days} working days). Please confirm the earliest start date.`
+    : "";
+
+  function send(form: HTMLFormElement, channel: Channel) {
+    const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
     const from = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
@@ -22,12 +29,29 @@ export function ContactForm({ email }: { email: string }) {
       setError("Add your name, work email, and a short message.");
       return;
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from)) {
+      setError("Enter a valid work email.");
+      return;
+    }
     setError(null);
     const company = String(data.get("company") ?? "").trim();
     const interest = String(data.get("interest") ?? "");
-    const subject = `Project enquiry — ${company || name}`;
+    const subject = booking
+      ? `Booking request — ${booking.name} — ${company || name}`
+      : `Project enquiry — ${company || name}`;
     const body = `Name: ${name}\nCompany: ${company}\nEmail: ${from}\nInterested in: ${interest}\n\n${message}`;
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    if (channel === "whatsapp") {
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`${subject}\n\n${body}`)}`, "_blank", "noopener");
+    } else {
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    send(event.currentTarget, submitter?.value === "whatsapp" ? "whatsapp" : "email");
   }
 
   return (
@@ -58,6 +82,7 @@ export function ContactForm({ email }: { email: string }) {
           name="message"
           rows={5}
           className={fieldClass}
+          defaultValue={defaultMessage}
           placeholder="Tell us what you're building and what you need to protect."
           onChange={() => error && setError(null)}
         />
@@ -67,13 +92,27 @@ export function ContactForm({ email }: { email: string }) {
           {error}
         </p>
       )}
-      <div className="sm:col-span-2">
+      <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
         <button
           type="submit"
-          className="rounded-full bg-gradient-to-r from-accent to-accent-dark px-8 py-3 font-medium text-white"
+          value="whatsapp"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-dark px-7 py-3 font-medium text-white"
         >
-          Send enquiry
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4a.5.5 0 0 0 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z" />
+          </svg>
+          Send on WhatsApp
         </button>
+        <button
+          type="submit"
+          value="email"
+          className="rounded-full border border-white/20 px-7 py-3 font-medium text-white transition-colors hover:border-accent"
+        >
+          Send by email
+        </button>
+        <p className="w-full text-sm text-white/40">
+          Opens WhatsApp or your email app with your message ready to send.
+        </p>
       </div>
     </form>
   );

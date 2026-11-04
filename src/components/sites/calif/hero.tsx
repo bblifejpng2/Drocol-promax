@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { HeroPhoto } from "./page-hero";
 import { heroBadge, heroDescription } from "./data";
 
 export function Hero() {
   return (
-    <section className="on-photo bg-home relative px-3 pt-[140px] pb-20 lg:px-10 lg:pt-[230px] lg:pb-28">
+    <section className="on-photo relative bg-[#1c1917] px-3 pt-[140px] pb-20 lg:px-10 lg:pt-[230px] lg:pb-28">
+      <HeroPhoto src="/sites/calif/heroes/home.jpg" />
       {/* Gradient fade at bottom */}
       <div className="hero-fade absolute bottom-0 left-0 h-48 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
       <div className="relative z-10">
@@ -43,11 +45,9 @@ export function Hero() {
               className="flex items-center rounded-full border border-accent bg-gradient-to-r from-accent to-accent-dark transition-all"
             >
               <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/20">
-                <img
-                  src="/sites/calif/arrow.39f6457d.svg"
-                  alt=""
-                  className="animate-arrow-bounce"
-                />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="animate-arrow-bounce text-white">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
               </div>
               <div className="px-9 text-lg font-medium text-white">
                 Let&apos;s talk

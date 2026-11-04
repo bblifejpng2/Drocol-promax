@@ -1,4 +1,6 @@
-import { researchArticles, researchIntro, researchItems } from "./data";
+import Link from "next/link";
+import { researchIntro, researchItems } from "./data";
+import { articles } from "./research-articles";
 
 // Editorial list in calif's research style: date, topic and title per row,
 // followed by the areas the research program publishes in.
@@ -17,24 +19,26 @@ export function Research() {
           </div>
 
           <ul className="border-t border-white/15">
-            {researchArticles.map((article) => (
-              <li
-                key={article.slug}
-                className="grid grid-cols-1 gap-3 border-b border-white/15 py-8 md:grid-cols-[140px_180px_1fr_auto] md:items-baseline md:gap-8 lg:py-10"
-              >
+            {articles.map((article) => (
+              <li key={article.slug} className="border-b border-white/15">
+                <Link
+                  href={`/research/${article.slug}`}
+                  className="group grid grid-cols-1 gap-3 py-8 md:grid-cols-[140px_180px_1fr_auto] md:items-baseline md:gap-8 lg:py-10"
+                >
                 <time className="text-sm text-white/40">{article.date}</time>
                 <p className="text-xs uppercase tracking-[0.2em] text-accent">
                   {article.tag}
                 </p>
                 <div>
-                  <h3 className="mb-2 text-xl font-semibold leading-snug text-white lg:text-2xl">
+                  <h3 className="mb-2 text-xl font-semibold leading-snug text-white transition-colors group-hover:text-accent lg:text-2xl">
                     {article.title}
                   </h3>
                   <p className="leading-relaxed text-white/60">{article.excerpt}</p>
                 </div>
                 <p className="whitespace-nowrap text-sm text-white/40">
-                  {article.readTime}
+                  {article.readTime} <span aria-hidden="true" className="text-accent">→</span>
                 </p>
+                </Link>
               </li>
             ))}
           </ul>

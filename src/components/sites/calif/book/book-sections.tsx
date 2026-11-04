@@ -13,7 +13,9 @@ import {
   type CompareValue,
 } from "./book-data";
 
-const checkoutHref = (level: string) => `/book/checkout?level=${level}`;
+// Online checkout is paused until payments and email codes have a backend
+// (see docs/research/drocol-booking/BUILD-NOTES.md); requests go to Contact.
+const checkoutHref = (level: string) => `/contact?level=${level}#start`;
 
 function Tick({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -26,7 +28,7 @@ function Tick({ className = "h-4 w-4" }: { className?: string }) {
 export function BookHero() {
   return (
     <section className="on-photo relative bg-[#1c1917] px-3 pt-[140px] pb-16 lg:px-10 lg:pt-[200px] lg:pb-24">
-      <HeroPhoto src="/sites/calif/heroes/solutions.jpg" />
+      <HeroPhoto src="/sites/calif/heroes/book.jpg" />
       <div className="hero-fade absolute bottom-0 left-0 h-32 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
       <div className="relative z-10 mx-auto max-w-screen-xl">
         <p className="mb-4 pl-3 text-xs uppercase tracking-[0.2em] text-accent">
@@ -138,7 +140,7 @@ export function BookPricing() {
           })}
         </div>
         <p className="mt-8 text-white/50">
-          All prices are fixed. 7.5% VAT is added at checkout. Need a bigger scope?{" "}
+          All prices are fixed, with 7.5% VAT added to your invoice. Choose a level and we confirm your start date within one business day. Need a bigger scope?{" "}
           <Link href="/contact" className="text-accent hover:underline">Get a custom quote</Link>.
         </p>
       </div>
@@ -171,7 +173,7 @@ export function BookCompare() {
       <div className="mx-auto max-w-screen-xl">
         <p className="mb-4 text-xs uppercase tracking-[0.2em] text-accent">Compare</p>
         <h2 className="mb-12 text-3xl font-semibold leading-tight text-white lg:mb-16 lg:text-5xl">Every level, side by side</h2>
-        <div className="overflow-x-auto rounded-lg border border-white/10">
+        <div className="relative overflow-x-auto rounded-lg border border-white/10">
           <table className="w-full min-w-[760px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-white/10">

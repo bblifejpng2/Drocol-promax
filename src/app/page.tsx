@@ -4,8 +4,10 @@ import { LogoCarousel } from "@/components/sites/calif/logo-carousel";
 import { Services } from "@/components/sites/calif/services";
 import { Testimonials } from "@/components/sites/calif/testimonials";
 import { Press } from "@/components/sites/calif/press";
+import { WhyDrocol } from "@/components/sites/calif/why-drocol";
 import { CTA } from "@/components/sites/calif/cta";
 import { Footer } from "@/components/sites/calif/footer";
+import { SHOW_TESTIMONIALS } from "@/components/sites/calif/data";
 
 export default function Home() {
   return (
@@ -15,7 +17,8 @@ export default function Home() {
         <Hero />
         <LogoCarousel />
         <Services />
-        <Testimonials />
+        {SHOW_TESTIMONIALS && <Testimonials />}
+        <WhyDrocol />
         <Press />
         <CTA />
       </main>

@@ -48,11 +48,9 @@ export function CTA() {
             className="flex items-center rounded-full border border-accent bg-gradient-to-r from-accent to-accent-dark transition-all"
           >
             <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/20">
-              <img
-                src="/sites/calif/arrow.39f6457d.svg"
-                alt=""
-                className="animate-arrow-bounce"
-              />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="animate-arrow-bounce text-white">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
             </div>
             <div className="px-9 text-lg font-medium text-white">
               Let&apos;s talk

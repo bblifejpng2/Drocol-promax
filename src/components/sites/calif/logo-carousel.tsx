@@ -1,29 +1,27 @@
 import { partners } from "./data";
-import { PartnerMark } from "./partner-logos";
 
-// Calif "In good company" strip: two identical slides side by side so the
-// translateX(-100%) loop is seamless. Partners repeat to fill wide screens.
+// "In good company" strip: partner names as plain wordmarks. We don't draw
+// logos for real companies; add their official logo files here once they
+// supply them. Two identical slides side by side keep the loop seamless.
 const REPEAT = 5;
 
-function LogoSlide({ hidden = false }: { hidden?: boolean }) {
+function NameSlide({ hidden = false }: { hidden?: boolean }) {
   const items = Array.from({ length: REPEAT }, () => partners).flat();
   return (
-    <div
-      className="animate-scroll-slide flex shrink-0 items-center gap-12 pr-12"
+    <ul
+      className="animate-scroll-slide flex shrink-0 items-center gap-16 pr-16"
       aria-hidden={hidden || undefined}
     >
       {items.map((partner, i) => (
-        <div
+        <li
           key={`${partner.id}-${i}`}
-          className="flex h-12 w-48 shrink-0 items-center justify-center gap-2.5"
+          className="flex shrink-0 items-center gap-16 whitespace-nowrap text-2xl font-semibold tracking-tight text-white/70 lg:text-3xl"
         >
-          <PartnerMark id={partner.id} className="h-9 w-9 shrink-0" />
-          <span className="whitespace-nowrap text-lg font-bold tracking-tight text-white">
-            {partner.name}
-          </span>
-        </div>
+          {partner.name}
+          <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-accent/50" />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
@@ -36,8 +34,8 @@ export function LogoCarousel() {
         </p>
       </div>
       <div className="flex w-full flex-nowrap overflow-hidden">
-        <LogoSlide />
-        <LogoSlide hidden />
+        <NameSlide />
+        <NameSlide hidden />
       </div>
     </section>
   );

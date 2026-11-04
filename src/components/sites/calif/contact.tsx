@@ -1,9 +1,10 @@
 import { contactItems } from "./data";
 import { ContactForm } from "./contact-form";
+import type { LevelId } from "./book/book-data";
 
 // Enterprise contact: 24/7 incident line up top, channel cards, then a
 // project enquiry form beside the office details.
-export function Contact() {
+export function Contact({ level }: { level?: LevelId }) {
   const [general, support, direct, location] = contactItems;
 
   return (
@@ -58,14 +59,14 @@ export function Contact() {
         {/* Enquiry form + office */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-20">
           <div>
-            <h2 className="mb-3 text-3xl font-semibold text-white lg:text-4xl">
-              Start a project
+            <h2 id="start" className="mb-3 scroll-mt-28 text-3xl font-semibold text-white lg:text-4xl">
+              {level ? "Book your test" : "Start a project"}
             </h2>
             <p className="mb-10 text-lg text-white/60">
               Talk to our security team. No pressure, no jargon — just a practical
               conversation about your security.
             </p>
-            <ContactForm email={general.value} />
+            <ContactForm email={general.value} level={level} />
           </div>
           <aside className="border-t border-white/10 pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
             <p className="mb-4 text-xs uppercase tracking-[0.2em] text-accent">

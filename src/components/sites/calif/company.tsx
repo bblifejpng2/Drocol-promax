@@ -1,4 +1,5 @@
 import { approachSteps, companyManifesto, companyPillars } from "./data";
+import { TESTER } from "./book/book-data";
 
 export function Company() {
   return (
@@ -68,6 +69,26 @@ export function Company() {
                 <p className="leading-relaxed text-white/60">{pillar.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership */}
+      <section className="bg-primary px-3 py-16 lg:px-6 lg:py-24">
+        <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+          <div>
+            <p className="mb-4 text-xs uppercase tracking-[0.2em] text-accent">Leadership</p>
+            <h2 className="text-3xl font-semibold leading-tight text-white lg:text-5xl">Led by practitioners</h2>
+          </div>
+          <div className="flex flex-col gap-6 rounded-lg border border-white/10 bg-secondary p-6 sm:flex-row sm:items-start lg:p-10">
+            <div aria-hidden="true" className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-accent/15 text-2xl font-bold text-accent">
+              {TESTER.initials}
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-white">{TESTER.name}</h3>
+              <p className="mb-4 text-white/50">{TESTER.role}</p>
+              <p className="leading-relaxed text-white/70">{TESTER.bio}</p>
+            </div>
           </div>
         </div>
       </section>

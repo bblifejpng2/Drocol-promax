@@ -344,7 +344,7 @@ export const contactItems: ContactItem[] = [
   {
     label: "Technical Support",
     value: "+234 807 093 9166",
-    href: "tel:+23412804400",
+    href: "tel:+2348070939166",
     desc: "For urgent security concerns, incident response and managed clients.",
   },
   {
@@ -371,6 +371,10 @@ export type Testimonial = {
 };
 
 export const testimonialsHeading = "Don't take our word for it";
+
+// The quotes below are SAMPLE copy. Keep this false until they are replaced
+// with real, approved client quotes; the homepage hides the section until then.
+export const SHOW_TESTIMONIALS = false;
 
 // Drocol's Instagram (from drocol.com). Every "Drocol" in a testimonial
 // quote is rendered as an orange link to this profile.
@@ -432,40 +436,3 @@ export const companyManifesto = {
     "We're building a company that contributes to the future of cybersecurity through expertise, research, education, and technology.",
 };
 
-// Published research — from drocol.com (live bundle)
-export type ResearchArticle = {
-  slug: string;
-  tag: string;
-  title: string;
-  excerpt: string;
-  readTime: string;
-  date: string;
-};
-
-export const researchArticles: ResearchArticle[] = [
-  {
-    slug: "ndpa-compliance-in-practice",
-    tag: "Compliance",
-    title: "The NDPA in practice: what compliance actually requires",
-    excerpt: "The practical steps Nigerian organizations need to take, and the common gaps we see.",
-    readTime: "6 min read",
-    date: "12 Feb 2026",
-  },
-  {
-    slug: "ai-in-security-assessments",
-    tag: "Technology",
-    title: "AI in security assessments: where automation helps, and where it doesn't",
-    excerpt:
-      "An honest look at what machines do well, what they miss, and why expert judgment still decides what matters.",
-    readTime: "5 min read",
-    date: "5 Feb 2026",
-  },
-  {
-    slug: "inside-a-penetration-test",
-    tag: "Offensive Security",
-    title: "Inside a penetration test: what happens, what you receive, and how to prepare",
-    excerpt: "A clear walkthrough of a professional engagement, written for teams commissioning their first test.",
-    readTime: "8 min read",
-    date: "28 Jan 2026",
-  },
-];

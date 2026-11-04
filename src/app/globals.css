@@ -167,18 +167,6 @@
   animation: 1.2s ease-in-out infinite arrow-bounce;
 }
 
-.bg-home {
-  background-image: url("/sites/calif/hero-bg-desktop.a1a48b0a.webp");
-  background-size: cover;
-  background-position: center;
-}
-
-@media (max-width: 768px) {
-  .bg-home {
-    background-image: url("/sites/calif/hero-bg-mobile.787f1cdc.webp");
-  }
-}
-
 :target {
   scroll-margin-top: 100px;
 }
