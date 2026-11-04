@@ -4,7 +4,7 @@ import { heroBadge, heroDescription } from "./data";
 
 export function Hero() {
   return (
-    <section className="on-photo relative bg-[#1c1917] px-3 pt-[140px] pb-20 lg:px-10 lg:pt-[230px] lg:pb-28">
+    <section className="on-photo relative bg-[#1c1917] px-3 pt-[170px] pb-16 lg:px-10 lg:pt-[280px] lg:pb-24">
       <HeroPhoto src="/sites/calif/heroes/home.jpg" />
       {/* Gradient fade at bottom */}
       <div className="hero-fade absolute bottom-0 left-0 h-48 w-full bg-gradient-to-t from-primary via-primary/70 to-transparent" />
