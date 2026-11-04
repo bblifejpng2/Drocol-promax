@@ -367,3 +367,7 @@ html.phone-desktop .phone-hero-offset {
 html.phone-desktop .phone-main-offset {
   padding-top: 250px;
 }
+/* Book a test page on phones: extra space above the hero label. */
+html.phone-desktop .phone-hero-offset.book-hero {
+  padding-top: 400px;
+}
