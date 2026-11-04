@@ -298,3 +298,63 @@ html.phone-desktop header {
 html.phone-desktop .text-\[11px\] {
   font-size: 1rem;
 }
+
+/* Phone desktop view: the header is enlarged for visibility and easy
+   tapping (the page is shown at ~37% on a phone). It becomes two rows:
+   logo and buttons on top, all six links spread across a second row.
+   No ☰ menu. Laptops are unaffected. These rules are unlayered, so they
+   override Tailwind's responsive utilities (lg:flex, lg:hidden, ...). */
+html.phone-desktop .site-nav {
+  padding: 1.25rem 2.5rem 0.5rem;
+}
+html.phone-desktop .nav-logo > span {
+  gap: 1.25rem;
+}
+html.phone-desktop .nav-logo svg {
+  height: 5rem;
+}
+html.phone-desktop .nav-logo svg + svg {
+  height: 3.25rem;
+}
+html.phone-desktop .nav-controls {
+  gap: 1.5rem;
+}
+html.phone-desktop .nav-theme {
+  width: 5rem;
+  height: 5rem;
+}
+html.phone-desktop .nav-theme svg {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+html.phone-desktop .nav-book {
+  height: 5rem;
+  padding: 0 2.5rem;
+  font-size: 1.8rem;
+}
+html.phone-desktop .nav-burger {
+  display: none;
+}
+html.phone-desktop #menu {
+  order: 3;
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+html.phone-desktop .nav-links {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0;
+  font-size: 1.8rem;
+}
+html.phone-desktop .nav-links > li {
+  margin: 0;
+}
+html.phone-desktop .nav-links a {
+  padding: 1.1rem 0.25rem;
+}
+html.phone-desktop .nav-links > li.sm\:hidden {
+  display: none;
+}

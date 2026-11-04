@@ -11,24 +11,26 @@ export function Header() {
 
   return (
     <header className="bg-secondary fixed w-full z-50 transition-colors print:hidden">
-      <nav className="px-4 py-2.5 lg:px-6">
+      <nav className="site-nav px-4 py-2.5 lg:px-6">
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
-          <Link href="/" aria-label="Drocol home">
+          <Link href="/" aria-label="Drocol home" className="nav-logo">
             <DrocolLogo />
           </Link>
-          <div className="flex items-center gap-2 lg:order-2">
-            <ThemeToggle />
+          <div className="nav-controls flex items-center gap-2 lg:order-2">
+            <ThemeToggle className="nav-theme" />
             <Link
               href="/book"
-              className="hidden h-10 items-center rounded-full bg-gradient-to-r from-accent to-accent-dark px-5 font-medium text-white sm:inline-flex"
+              className="nav-book hidden h-10 items-center rounded-full bg-gradient-to-r from-accent to-accent-dark px-5 font-medium text-white sm:inline-flex"
             >
               Book a test
             </Link>
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="inline-flex items-center p-2 text-white lg:hidden ml-1"
-              aria-label="Open main menu"
+              className="nav-burger ml-1 inline-flex items-center p-2 text-white lg:hidden"
+              aria-label={menuOpen ? "Close main menu" : "Open main menu"}
+              aria-expanded={menuOpen}
+              aria-controls="menu"
             >
               {menuOpen ? (
                 <svg
@@ -65,11 +67,12 @@ export function Header() {
             }`}
             id="menu"
           >
-            <ul className="mt-4 flex flex-col text-xl font-medium lg:mt-0 lg:flex-row lg:space-x-1 lg:text-base xl:space-x-8 xl:text-xl">
+            <ul className="nav-links mt-4 flex flex-col text-xl font-medium lg:mt-0 lg:flex-row lg:space-x-1 lg:text-base xl:space-x-8 xl:text-xl">
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
+                    onClick={() => setMenuOpen(false)}
                     className="block py-2 pl-3 pr-4 text-white transition-colors hover:text-accent lg:px-2 xl:pl-3 xl:pr-4"
                   >
                     {link.label}
@@ -79,6 +82,7 @@ export function Header() {
               <li className="sm:hidden">
                 <Link
                   href="/book"
+                  onClick={() => setMenuOpen(false)}
                   className="block py-2 pl-3 pr-4 text-accent transition-colors hover:text-white"
                 >
                   Book a test
