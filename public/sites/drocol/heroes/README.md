@@ -29,7 +29,7 @@ credit not required but appreciated). Downloaded 2026-11-04.
 | industries.jpg | Malik Buraimoh                   | https://unsplash.com/photos/EMjpo0YjHPw  |
 | research.jpg   | Chris Ried                       | https://unsplash.com/photos/ieic5Tq8YMk  |
 | contact.jpg    | Aalo Lens                        | https://unsplash.com/photos/Ypv0MH4izf8  |
-| home.jpg       | Namnso Ukpanah                   | https://unsplash.com/photos/6UqJTfoXIq8  |
+| home.jpg       | Namnso Ukpanah (sky), Malik Buraimoh (city) | https://unsplash.com/photos/6UqJTfoXIq8 and https://unsplash.com/photos/hF5bIFQ62Hw |
 | book.jpg       | Kevin Horvat                     | https://unsplash.com/photos/Pyjp2zmxuLk  |
 | article.jpg    | Pawel Czerwinski                 | https://unsplash.com/photos/fPN1w7bIuNU  |
 
@@ -40,3 +40,10 @@ wall. The unedited photo is `docs/design-references/contact-original.jpg`.
 To regenerate (for example after a logo change), from the project root:
 
     node scripts/make-contact-sign.mjs docs/design-references/contact-original.jpg public/sites/drocol/heroes/contact.jpg
+
+`home.jpg` is a composite of those two photos: the sky and sun from the first,
+the city from the second, with radio masts and a building logo retouched out.
+The source files are in `docs/design-references/` (`home-original.jpg`,
+`home-city.jpg`). To regenerate, from the project root:
+
+    node scripts/make-home-hero.mjs docs/design-references/home-original.jpg docs/design-references/home-city.jpg public/sites/drocol/heroes/home.jpg
