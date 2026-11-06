@@ -18,12 +18,6 @@ export function Header() {
           </Link>
           <div className="nav-controls flex items-center gap-2 lg:order-2">
             <ThemeToggle className="nav-theme" />
-            <Link
-              href="/book"
-              className="nav-book hidden h-10 items-center rounded-full bg-gradient-to-r from-accent to-accent-dark px-5 font-medium text-white sm:inline-flex"
-            >
-              Book a test
-            </Link>
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -79,15 +73,6 @@ export function Header() {
                   </Link>
                 </li>
               ))}
-              <li className="sm:hidden">
-                <Link
-                  href="/book"
-                  onClick={() => setMenuOpen(false)}
-                  className="block py-2 pl-3 pr-4 text-accent transition-colors hover:text-white"
-                >
-                  Book a test
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

@@ -301,7 +301,7 @@ html.phone-desktop .text-\[11px\] {
 
 /* Phone desktop view: the header is enlarged for visibility and easy
    tapping (the page is shown at ~37% on a phone). It becomes two rows:
-   logo and buttons on top, all six links spread across a second row.
+   logo and theme button on top, all six links spread across a second row.
    No ☰ menu. Laptops are unaffected. These rules are unlayered, so they
    override Tailwind's responsive utilities (lg:flex, lg:hidden, ...). */
 html.phone-desktop .site-nav {
@@ -327,11 +327,6 @@ html.phone-desktop .nav-theme svg {
   width: 2.25rem;
   height: 2.25rem;
 }
-html.phone-desktop .nav-book {
-  height: 5rem;
-  padding: 0 2.5rem;
-  font-size: 1.8rem;
-}
 html.phone-desktop .nav-burger {
   display: none;
 }
@@ -355,10 +350,6 @@ html.phone-desktop .nav-links > li {
 html.phone-desktop .nav-links a {
   padding: 1.1rem 0.25rem;
 }
-html.phone-desktop .nav-links > li.sm\:hidden {
-  display: none;
-}
-
 /* Phone desktop view: the two-row header is ~200px tall, so push hero
    content and plain pages down to clear it with some breathing room. */
 html.phone-desktop .phone-hero-offset {
